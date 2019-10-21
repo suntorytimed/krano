@@ -22,21 +22,17 @@ library(reshape2)
 library(RColorBrewer)
 library(tester)
 
-data_validation<-function(data){
+data_conversion<-function(dataset){
+  data<-dataset
+  FR<-ncol(data)/2
+  
   # check for valid data input
-  datacheck<-ncol(data)/2
   if(is.data.frame(data)==FALSE){stop("dataset is not a dataframe")
   }
-  if(is_positive_integer(ncol(data)/datacheck)==FALSE){stop("number of FR does not match size of dataframe")
+  if(is_positive_integer(ncol(data)/FR)==FALSE){stop("number of FR does not match size of dataframe")
   }
   if(any(is.na(data))==TRUE){stop("dataset contains missing values")
   }
-}
-
-data_conversion<-function(dataset){
-  data<-dataset
-  
-  data_validation(data)
   
   converted_data=matrix(ncol=2,nrow=0)
   column_csv<-(1)
@@ -53,15 +49,12 @@ data_conversion<-function(dataset){
       row_csv <- 1;
     }
   }
-  
-  write.table(converted_data,file="data.csv",row.names=FALSE,na="",col.names=FALSE,sep=",");
-  
+
+  kano(converted_data,FR)
 }
 
 kano<-function(dataset,FR){
 data<-dataset
-
-data_validation(data)
 
 x=seq(from = 0.0, to = 1, by = 0.01)
 y=seq(from = 0.0, to = 1, by = 0.01)
@@ -236,3 +229,4 @@ print(questionable)
 print(results)
 
 }
+
