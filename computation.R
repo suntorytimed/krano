@@ -1,19 +1,12 @@
-# originally released under CC-BY-4.0 by Reynir S. Atlason and Davide Giacalone
-# https://creativecommons.org/licenses/by/4.0/
+# Author: Stefan Weiberg, SUSE LLC. <sweiberg@suse.com>
+# released under EUPL v1.2
 
-# modified under EUPL v1.2 by adding data conversion functionality and shiny interface
-# Stefan Weiberg, SUSE LLC. <sweiberg@suse.com>
-
-# This is an R function designed to conduct a quantitative Kano analysis.
-# Data should be imported as a n*2 dataset under the name "data.csv".
-# The columns in the dataset should consist of the functional and dysfunctional answers.
-# The numerical values correspond to the following answers: 1=Like, 2=Must-be, 3=Neutral, 4=Live with, 5=Dislike.
-# Answers should be listed sequentially in the dataset.
-# There should be no missing values in the dataset.
-
-# The first time you use the function, you should run the whole code to save it. 
-# After importing your data, use the function by running "kano(dataset,FR)", where dataset is the name of your dataset and FR is the number of functional requirements to be evaluated.
-# The output will be printed in the console, exported to three .csv files, and graphed within R studio.
+# Shiny web interface for uploading Kano questionnaire results
+# and evaluating the answers.
+# Plots the results for must-have, attractive and one-dimensional
+# features and prints a table with the results.
+# All unimportant features are listed in a separate tab with their
+# classification
 
 library(plyr)
 library(shiny)
