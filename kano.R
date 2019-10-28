@@ -83,29 +83,22 @@ kano<-function(dataset){
     class=data.frame(cbind(data,column))
     splitted=as.data.frame(sapply(split(class, col3), "[[", "column"))
 
-    # count the entries of classifications.
-    for (j in 1:FR) {
-        assign(paste0("frc", j), data.frame(table(splitted[,j])))
-    }
-
-    # isolate the answer with the highest count
-    for (j in 1:FR) {
-        assign(paste0("class", j), as.data.frame(which.max(table(splitted[,j]))))
-    }
-
-    # construct the CSi and DSi values
     cslist=c()
-    for (i in 1:FR) {
-        cslist=append(cslist,(sum(splitted[[i]]=="A")+sum(splitted[[i]]=="O"))/
-                        ((sum(splitted[[i]]=="A")+sum(splitted[[i]]=="O")
-                        +sum(splitted[[i]]=="M")+sum(splitted[[i]]=="I"))))
-    }
-
     dslist=c()
-    for (k in 1:FR) {
-        dslist=append(dslist,-(sum(splitted[[k]]=="O")+sum(splitted[[k]]=="M"))/
-                        ((sum(splitted[[k]]=="A")+sum(splitted[[k]]=="O")
-                        +sum(splitted[[k]]=="M")+sum(splitted[[k]]=="I"))))
+    for (j in 1:FR) {
+        # count the entries of classifications.
+        assign(paste0("frc", j), data.frame(table(splitted[,j])))
+
+        # isolate the answer with the highest count
+        assign(paste0("class", j), as.data.frame(which.max(table(splitted[,j]))))
+
+        # construct the CSi and DSi values
+        cslist=append(cslist,(sum(splitted[[j]]=="A")+sum(splitted[[j]]=="O"))/
+                        ((sum(splitted[[j]]=="A")+sum(splitted[[j]]=="O")
+                        +sum(splitted[[j]]=="M")+sum(splitted[[j]]=="I"))))
+        dslist=append(dslist,-(sum(splitted[[j]]=="O")+sum(splitted[[j]]=="M"))/
+                        ((sum(splitted[[j]]=="A")+sum(splitted[[j]]=="O")
+                        +sum(splitted[[j]]=="M")+sum(splitted[[j]]=="I"))))
     }
 
     functions=data.frame()
