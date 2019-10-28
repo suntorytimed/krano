@@ -2,6 +2,6 @@
 
 computation and visualization of Kano data in R
 
-## Example output of Rstudio
+## RShiny web-interface
 
-![Screenshot](example/Rstudio_output_example.jpg)
+![Screenshot](img/webinterface.png)
