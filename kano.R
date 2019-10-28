@@ -6,12 +6,6 @@
 
 # This is an R function designed to conduct a quantitative Kano analysis.
 
-library(plyr)
-library(ggplot2)
-library(reshape2)
-library(RColorBrewer)
-library(tester)
-
 kano<-function(dataset){
     pre_convert_data<-dataset
     FR<-ncol(pre_convert_data)/2
