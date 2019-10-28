@@ -56,6 +56,7 @@ kano<-function(dataset){
     counter<-(1)
     counter2<-(1)
     funcnames<-c()
+    unimportant<-c()
 
     while(counter <= nrow(data)*ncol(data))
     {
@@ -108,9 +109,7 @@ kano<-function(dataset){
     functions=data.frame()
     finalpoint<-matrix(ncol=0,nrow=0)
     classifier<-c()
-    indifferent<-c()
-    reverse<-c()
-    questionable<-c()
+    unimportantClassifier<-c()
 
     # Here we calculate the Must-be values, this must only be done if and only if we have 
     # Must-be attributes
@@ -154,34 +153,20 @@ kano<-function(dataset){
     #Here we look for Indifferent values
 
     for (h in 1:FR) 
-        if (rownames(as.data.frame(which.max(table(splitted[,h]))))=="I")
+        if (rownames(as.data.frame(which.max(table(splitted[,h]))))=="I" ||
+            rownames(as.data.frame(which.max(table(splitted[,h]))))=="R" ||
+            rownames(as.data.frame(which.max(table(splitted[,h]))))=="Q")
         {
-        indifferent=append(indifferent,colnames(splitted[h]))  
-        indifferent=append(indifferent,rownames(data.frame(which.max(table(splitted[,h])))))
+        unimportant=append(unimportant,row.names(splitted[h,]))
+        unimportantClassifier=append(unimportantClassifier,rownames(data.frame(which.max(table(splitted[,h])))))
         }
-
-    #Here we look for Reverse values
-
-    for (h in 1:FR) 
-        if (rownames(as.data.frame(which.max(table(splitted[,h]))))=="R")
-        {
-        reverse=append(reverse,colnames(splitted[h]))
-        reverse=append(reverse,rownames(data.frame(which.max(table(splitted[,h])))))
-        }
-
-    #Here we look for Reverse values
-
-    for (h in 1:FR) 
-        if (rownames(as.data.frame(which.max(table(splitted[,h]))))=="Q")
-        {
-        reverse=append(questionable,colnames(splitted[h]))
-        reverse=append(questionable,rownames(data.frame(which.max(table(splitted[,h])))))
-        }
-
 
     results=cbind(funcnames,classifier,format(round(functions[,100],2),nsmall=2),format(round(functions[,1],2),nsmall=2))
     colnames(results)<- c("Attribute Number","Classification","CS Values","DS Values")
 
-    resultList<-list("resultTable" = results, "FR" = FR, "funcnames" = funcnames, "functions" = functions)
+    unimportant=cbind(unimportant,unimportantClassifier)
+    colnames(unimportant)<- c("Attribute Number", "Classification")
+
+    resultList<-list("resultTable" = results, "FR" = FR, "funcnames" = funcnames, "functions" = functions, "unimportant" = unimportant)
     return(resultList)
 }

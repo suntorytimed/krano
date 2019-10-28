@@ -56,7 +56,15 @@ ui <- fluidPage(
     ),
 
     mainPanel(
-      plotOutput("kanoCurves")
+      tabsetPanel(
+        tabPanel("relevant features", 
+          plotOutput("kanoCurves"),
+          tableOutput("table")
+          ),
+        tabPanel("unimportant features",
+          tableOutput("unimportant"),
+        )
+      )
     )
   )
 )
@@ -95,6 +103,8 @@ server<-function(input,output){
               horiz = TRUE, fill=cols, col=cols[h])
       }
     })
+    output$table<-renderTable(results$resultTable)
+    output$unimportant<-renderTable(results$unimportant)
   })
 }
 
